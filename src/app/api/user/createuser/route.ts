@@ -1,4 +1,5 @@
 import { PrismaClient } from "@prisma/client";
+import { verifyjwt } from "@/lib/jwt";
 const prisma=new PrismaClient()
 import bcrypt from "bcrypt";
 
@@ -12,6 +13,16 @@ interface Reaqustbody{
 
 
 export async function POST(request:Request){
+   const accessToken=request.headers.get("authorization")
+   if(!accessToken ||!verifyjwt(accessToken)){
+      return new Response(JSON.stringify({
+        error:"unathorized"
+        
+      }),{
+        status:401
+      })
+   }
+
     const body:Reaqustbody=await request.json()
     const user=await prisma.user.create({
         data:{

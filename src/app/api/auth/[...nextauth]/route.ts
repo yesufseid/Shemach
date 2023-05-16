@@ -1,4 +1,5 @@
 
+import { Session } from "inspector"
 import NextAuth from "next-auth/next"
 import CredentialsProvider from "next-auth/providers/credentials"
 
@@ -22,14 +23,25 @@ const handler=NextAuth({
            
             
             // If no error and we have user data, return it
-            if (res.ok && user) {
+            if (user) {
+              
+              
               return user
             }
             // Return null if user data could not be retrieved
             return null
           }
         })
-      ]
+      ],
+      callbacks:{
+        async jwt({token,user}){
+          return {...token,...user}
+        },
+        async session({session,token}){
+          session.user=token as any
+          return session ;
+        }
+      }
 })
 
 
