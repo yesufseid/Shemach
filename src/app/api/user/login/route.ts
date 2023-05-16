@@ -1,4 +1,5 @@
 import { PrismaClient } from "@prisma/client";
+import bcrypt from "bcrypt"
 const prisma=new PrismaClient()
 
 interface Reaqustbody {
@@ -14,7 +15,7 @@ export async function POST(request:Request){
         }
      })
 
-     if(user && user.password===body.password){
+     if(user && (await bcrypt.compare(body.password,user.password))){
         return new Response(JSON.stringify(user))
      }else return new Response(JSON.stringify(null))
 }
