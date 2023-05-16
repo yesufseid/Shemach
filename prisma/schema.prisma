@@ -6,6 +6,69 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql"
+  provider = "mysql"
   url      = env("DATABASE_URL")
 }
+
+model User {
+  id      Int      @id @default(autoincrement())
+  email   String    @unique
+  firstname    String
+  lastname    String
+  password  String
+}
+
+model Lottery {
+  id         Int        @id @default(autoincrement())
+  createdAt  DateTime   @default(now())
+  item       String
+  numberofitem Int
+  date       DateTime
+  active     Boolean    @default(true)
+  numberofitemeachusertake Int 
+  lottery_user   Lottery_user[]  
+  lottery_validuser Lottery_validuser[]
+  lottery_attempts Lottery_attempts[]  
+  lottery_validnumber Lottery_validnumber[]
+  
+}
+
+model Lottery_user {
+  id    Int    @id @default(autoincrement())
+  user  Int
+  author    Lottery     @relation(fields: [authorId], references: [id])
+  authorId  Int
+}
+
+model Lottery_validuser {
+  id    Int    @id @default(autoincrement())
+  user  Int
+  author    Lottery     @relation(fields: [authorId], references: [id])
+  authorId  Int
+}
+
+model Lottery_attempts {
+  id    Int    @id @default(autoincrement())
+  attempts  Int
+  author    Lottery     @relation(fields: [authorId], references: [id])
+  authorId  Int
+}
+
+model Lottery_validnumber {
+  id    Int    @id @default(autoincrement())
+  validnumber  Int
+  author    Lottery     @relation(fields: [authorId], references: [id])
+  authorId  Int
+}
+
+
+model Admin {
+  id      Int      @id @default(autoincrement())
+  email   String    @unique
+  firstname    String
+  lastname    String
+  password  String
+}
+
+
+

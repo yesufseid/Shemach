@@ -8,19 +8,19 @@ const handler=NextAuth({
         CredentialsProvider({
           name: 'Credentials',
           credentials: {
-            username: { label: "Username", type: "text", placeholder: "0960417946" },
+            username: { label: "Username", type: "text", placeholder: "seidyesuf750@gmail.com" },
             password: { label: "Password", type: "password" }
           },
           async authorize(credentials, req) {
-            console.log(credentials?.username);
             
-            const res = await fetch("/your/endpoint", {
+            const res = await fetch("http://localhost:3000/api/user/login", {
               method: 'POST',
               body: JSON.stringify(credentials),
               headers: { "Content-Type": "application/json" }
             })
             const user = await res.json()
-      
+            console.log(user);
+            
             // If no error and we have user data, return it
             if (res.ok && user) {
               return user
