@@ -1,4 +1,4 @@
 export {default} from 'next-auth/middleware'
 export const config={
-    matcher:["/user/:path*"],
+    matcher:["/user/:path*","/admin/:path*"],
 }

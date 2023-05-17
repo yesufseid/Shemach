@@ -40,6 +40,12 @@ const handler=NextAuth({
         async session({session,token}){
           session.user=token as any
           return session ;
+        },
+        async redirect({ url, baseUrl }) {
+          console.log("url"+url);
+          console.log("baseurl"+baseUrl);
+          
+          return baseUrl+"/user"
         }
       }
 })
