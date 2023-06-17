@@ -2,7 +2,7 @@
 import { Session } from "inspector"
 import NextAuth from "next-auth/next"
 import CredentialsProvider from "next-auth/providers/credentials"
-import { redirect } from "next/dist/server/api-utils"
+import { redirect } from "next/navigation"
 
 
 const handler= NextAuth({
@@ -16,18 +16,14 @@ const handler= NextAuth({
 
             },
             async authorize(credentials, req) {
-
-              console.log(credentials);
-              if(credentials.updatepassword==="true"){
-              
-              }
-              
                const res = await fetch("http://localhost:3000/api/user/login", {
                 method: 'POST',
                 body: JSON.stringify(credentials),
                 headers: { "Content-Type": "application/json" }
               })
               const user = await res.json()
+              console.log(user);
+              
              // If no error and we have user data, return it
               if (user) {
                 
