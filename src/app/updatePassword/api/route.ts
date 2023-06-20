@@ -9,6 +9,7 @@ interface Reaqustbody{
 
 export async function POST(request:Request){
    const body:Reaqustbody=await request.json()
+   console.log(body);
    
 
    try {
@@ -42,11 +43,13 @@ export async function POST(request:Request){
         password:await bcrypt.hash(Random_password,10)
     }})
     if(user){
-        return new Response(JSON.stringify(user))
+     return   new Response(JSON.stringify(user))
     }
       }
    
    } catch (error) {
+    console.log(error);
+    
     return new Response(JSON.stringify( {
         Error:'the user aurady exist'
        }),{
